@@ -44,7 +44,7 @@ export const RESOURCE_URIS = {
 
 // Tool names
 export const TOOL_NAMES = {
-  QUERY_ACCOUNT: 'mx:query-account',
+  QUERY_ACCOUNT: 'mx-query-account',
 } as const;
 
 // Prompt names
