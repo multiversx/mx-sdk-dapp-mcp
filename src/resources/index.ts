@@ -16,6 +16,7 @@ import { SDKDappLoginLogoutResource } from './sdk-dapp-login-logout.js';
 import { SDKDappReactResource } from './sdk-dapp-react.js';
 import { SDKDappTransactionsResource } from './sdk-dapp-transactions.js';
 import { SDKDappCustomProviderResource } from './sdk-dapp-custom-providers.js';
+import { SDKDappInitResource } from './sdk-dapp-init.js';
 
 // Resource URIs
 const RESOURCE_URIS = {
@@ -24,6 +25,7 @@ const RESOURCE_URIS = {
   SDK_DAPP_REACT: 'mx://sdk-dapp-react',
   SDK_DAPP_TRANSACTIONS: 'mx://sdk-dapp-transactions',
   SDK_DAPP_CUSTOM_PROVIDERS: 'mx://sdk-dapp-custom-providers',
+  SDK_DAPP_INIT: 'mx://sdk-dapp-init',
 } as const;
 
 /**
@@ -70,6 +72,13 @@ export async function setupResources(server: Server): Promise<void> {
           description: 'Complete guide for creating and integrating custom signing providers',
           mimeType: 'application/json',
         },
+        {
+          uri: RESOURCE_URIS.SDK_DAPP_INIT,
+          name: 'SDK-DAPP v5 Initialization Guide',
+          description:
+            'Complete guide for initializing the sdk-dapp library with various configuration options',
+          mimeType: 'application/json',
+        },
       ],
     };
   });
@@ -95,6 +104,17 @@ export async function setupResources(server: Server): Promise<void> {
 
         case RESOURCE_URIS.SDK_DAPP_CUSTOM_PROVIDERS:
           return await SDKDappCustomProviderResource.read();
+
+        case RESOURCE_URIS.SDK_DAPP_INIT:
+          return {
+            contents: [
+              {
+                uri: RESOURCE_URIS.SDK_DAPP_INIT,
+                mimeType: 'text/markdown',
+                text: SDKDappInitResource,
+              },
+            ],
+          };
 
         default:
           throw new Error(`Unknown resource: ${uri}`);
