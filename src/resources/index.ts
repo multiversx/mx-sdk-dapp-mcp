@@ -4,18 +4,27 @@
  */
 
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
-import { 
+import {
   ListResourcesRequestSchema,
-  ReadResourceRequestSchema 
+  ReadResourceRequestSchema,
 } from '@modelcontextprotocol/sdk/types.js';
 
 import { logger } from '../utils/logger.js';
-import { RESOURCE_URIS, ERROR_CODES } from '../utils/constants.js';
-import { SDKDappInitResource } from './sdk-dapp-init.js';
+import { ERROR_CODES } from '../utils/constants.js';
+import { SDKDappGuideResource } from './sdk-dapp-guide.js';
 import { SDKDappLoginLogoutResource } from './sdk-dapp-login-logout.js';
-import { SDKDappCustomProviderResource } from './sdk-dapp-custom-providers.js';
-import { SDKDappTransactionsResource } from './sdk-dapp-transactions.js';
 import { SDKDappReactResource } from './sdk-dapp-react.js';
+import { SDKDappTransactionsResource } from './sdk-dapp-transactions.js';
+import { SDKDappCustomProviderResource } from './sdk-dapp-custom-providers.js';
+
+// Resource URIs
+const RESOURCE_URIS = {
+  SDK_DAPP_GUIDE: 'mx://sdk-dapp-guide',
+  SDK_DAPP_LOGIN_LOGOUT: 'mx://sdk-dapp-login-logout',
+  SDK_DAPP_REACT: 'mx://sdk-dapp-react',
+  SDK_DAPP_TRANSACTIONS: 'mx://sdk-dapp-transactions',
+  SDK_DAPP_CUSTOM_PROVIDERS: 'mx://sdk-dapp-custom-providers',
+} as const;
 
 /**
  * Setup all resources for the MCP server
@@ -26,37 +35,39 @@ export async function setupResources(server: Server): Promise<void> {
   // List all available resources
   server.setRequestHandler(ListResourcesRequestSchema, async () => {
     logger.debug('Listing available resources');
-    
+
     return {
       resources: [
         {
-          uri: RESOURCE_URIS.SDK_DAPP_INIT,
-          name: 'SDK Dapp Initialization Guide',
-          description: 'Complete guide for initializing and configuring SDK-DAPP v5',
+          uri: RESOURCE_URIS.SDK_DAPP_GUIDE,
+          name: 'SDK-DAPP v5 Complete Guide',
+          description:
+            'Comprehensive guide for SDK-DAPP v5 usage, initialization, and best practices',
           mimeType: 'application/json',
         },
         {
           uri: RESOURCE_URIS.SDK_DAPP_LOGIN_LOGOUT,
-          name: 'Login & Logout Guide',
-          description: 'Complete guide for implementing user authentication in SDK-DAPP v5',
-          mimeType: 'application/json',
-        },
-        {
-          uri: RESOURCE_URIS.SDK_DAPP_CUSTOM_PROVIDERS,
-          name: 'Custom Provider Development Guide',
-          description: 'Complete guide for creating and integrating custom signing providers in SDK-DAPP v5',
-          mimeType: 'application/json',
-        },
-        {
-          uri: RESOURCE_URIS.SDK_DAPP_TRANSACTIONS,
-          name: 'Transaction Management Guide',
-          description: 'Complete guide for signing and sending different types of transactions in SDK-DAPP v5',
+          name: 'SDK-DAPP v5 Login & Logout Guide',
+          description: 'Complete guide for implementing user authentication in MultiversX dApps',
           mimeType: 'application/json',
         },
         {
           uri: RESOURCE_URIS.SDK_DAPP_REACT,
-          name: 'React Hooks Guide',
-          description: 'Comprehensive guide for using reactive hooks from SDK-DAPP v5 in React',
+          name: 'SDK-DAPP v5 React Hooks Guide',
+          description:
+            'Comprehensive guide for using reactive hooks from sdk-dapp v5 in React applications',
+          mimeType: 'application/json',
+        },
+        {
+          uri: RESOURCE_URIS.SDK_DAPP_TRANSACTIONS,
+          name: 'SDK-DAPP v5 Transaction Management Guide',
+          description: 'Complete guide for signing and sending different types of transactions',
+          mimeType: 'application/json',
+        },
+        {
+          uri: RESOURCE_URIS.SDK_DAPP_CUSTOM_PROVIDERS,
+          name: 'SDK-DAPP v5 Custom Provider Development Guide',
+          description: 'Complete guide for creating and integrating custom signing providers',
           mimeType: 'application/json',
         },
       ],
@@ -70,20 +81,20 @@ export async function setupResources(server: Server): Promise<void> {
 
     try {
       switch (uri) {
-        case RESOURCE_URIS.SDK_DAPP_INIT:
-          return await SDKDappInitResource.read();
+        case RESOURCE_URIS.SDK_DAPP_GUIDE:
+          return await SDKDappGuideResource.read();
 
         case RESOURCE_URIS.SDK_DAPP_LOGIN_LOGOUT:
           return await SDKDappLoginLogoutResource.read();
 
-        case RESOURCE_URIS.SDK_DAPP_CUSTOM_PROVIDERS:
-          return await SDKDappCustomProviderResource.read();
+        case RESOURCE_URIS.SDK_DAPP_REACT:
+          return await SDKDappReactResource.read();
 
         case RESOURCE_URIS.SDK_DAPP_TRANSACTIONS:
           return await SDKDappTransactionsResource.read();
 
-        case RESOURCE_URIS.SDK_DAPP_REACT:
-          return await SDKDappReactResource.read();
+        case RESOURCE_URIS.SDK_DAPP_CUSTOM_PROVIDERS:
+          return await SDKDappCustomProviderResource.read();
 
         default:
           throw new Error(`Unknown resource: ${uri}`);
@@ -98,4 +109,4 @@ export async function setupResources(server: Server): Promise<void> {
   });
 
   logger.info('Resources setup completed');
-} 
+}

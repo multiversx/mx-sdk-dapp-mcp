@@ -13,7 +13,6 @@ import { setupResources } from './resources/index.js';
 import { setupTools } from './tools/index.js';
 import { setupPrompts } from './prompts/index.js';
 import { logger } from './utils/logger.js';
-import { ERROR_CODES } from './utils/constants.js';
 
 /**
  * Create and configure the MCP server
@@ -32,7 +31,7 @@ async function createServer(): Promise<Server> {
         prompts: {},
         logging: {},
       },
-    }
+    },
   );
 
   // Setup error handling
@@ -54,12 +53,12 @@ async function createServer(): Promise<Server> {
 async function main(): Promise<void> {
   try {
     logger.info('Starting MultiversX MCP Server...');
-    
+
     const server = await createServer();
     const transport = new StdioServerTransport();
-    
+
     await server.connect(transport);
-    
+
     logger.info('MultiversX MCP Server started successfully');
   } catch (error) {
     logger.error('Failed to start server:', error);
@@ -82,4 +81,4 @@ process.on('SIGTERM', () => {
 main().catch((error) => {
   logger.error('Unhandled error in main:', error);
   process.exit(1);
-}); 
+});
