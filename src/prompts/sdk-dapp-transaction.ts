@@ -8,7 +8,16 @@ import { logger } from '../utils/logger.js';
 /**
  * Generate transaction template with comprehensive MultiversX transaction flow
  */
-export function generateTransactionTemplate(args: any): string {
+interface TransactionTemplateArgs {
+  recipient?: string;
+  amount?: string;
+  data?: string;
+  contractAddress?: string;
+  functionName?: string;
+  functionArgs?: string[];
+}
+
+export function generateTransactionTemplate(args?: TransactionTemplateArgs): string {
   const recipient = args?.recipient || '[RECIPIENT_ADDRESS]';
   const amount = args?.amount || '[AMOUNT]';
   const data = args?.data || '';
@@ -42,7 +51,15 @@ const account = getAccount();
 const network = getNetworkConfig();
 
 const transaction = new Transaction({
-  value: BigInt('${amount}' + '0'.repeat(18)), // Convert EGLD to wei
+  // Validate and convert amount to wei
+  value: (() => {
+    const amountFloat = parseFloat('${amount}');
+    if (isNaN(amountFloat) || amountFloat < 0) {
+      throw new Error('Invalid amount: must be a non-negative number');
+    }
+    // Convert EGLD to wei (1 EGLD = 1e18 wei)
+    return BigInt(Math.floor(amountFloat * 1e18));
+  })(),
   data: new TransactionPayload('${data}'),
   receiver: Address.newFromBech32('${recipient}'),
   gasLimit: BigInt(GAS_LIMIT),
@@ -122,7 +139,12 @@ const currentSessionStatus = currentSession?.status;
 /**
  * Generate batch transaction template
  */
-export function generateBatchTransactionTemplate(args: any): string {
+interface BatchTransactionTemplateArgs {
+  transactions?: any[];
+  batchType?: 'parallel' | 'sequential';
+}
+
+export function generateBatchTransactionTemplate(args?: BatchTransactionTemplateArgs): string {
   const transactions = args?.transactions || [];
   const batchType = args?.batchType || 'parallel'; // 'parallel' or 'sequential'
 
@@ -313,7 +335,12 @@ const parsedResults = resultsParser.parseQueryResponse(queryResponse, endpoint);
 /**
  * Generate transaction monitoring template
  */
-export function generateTransactionMonitoringTemplate(args: any): string {
+interface TransactionMonitoringTemplateArgs {
+  sessionId?: string;
+  includeWebSocket?: boolean;
+}
+
+export function generateTransactionMonitoringTemplate(args?: TransactionMonitoringTemplateArgs): string {
   const sessionId = args?.sessionId || '[SESSION_ID]';
   const includeWebSocket = args?.includeWebSocket !== false;
 
@@ -422,7 +449,11 @@ createCustomToast({
 /**
  * Generate wallet setup guide
  */
-export function generateWalletSetupGuide(args: any): string {
+interface WalletSetupGuideArgs {
+  provider?: string;
+}
+
+export function generateWalletSetupGuide(args?: WalletSetupGuideArgs): string {
   const provider = args?.provider || 'any supported provider';
 
   return `Setting up a MultiversX wallet using ${provider}:
@@ -509,7 +540,11 @@ await walletConnectProvider.login();
 /**
  * Generate network switch instructions
  */
-export function generateNetworkSwitchInstructions(args: any): string {
+interface NetworkSwitchInstructionsArgs {
+  targetNetwork?: string;
+}
+
+export function generateNetworkSwitchInstructions(args?: NetworkSwitchInstructionsArgs): string {
   const targetNetwork = args?.targetNetwork || '[TARGET_NETWORK]';
 
   return `Switching to MultiversX ${targetNetwork}:
@@ -538,7 +573,7 @@ import { EnvironmentsEnum } from '@multiversx/sdk-dapp/out/types/enums.types';
 const config = {
   storage: { getStorageCallback: () => sessionStorage },
   dAppConfig: {
-    environment: EnvironmentsEnum.${targetNetwork.toLowerCase()}, // devnet, testnet, or mainnet
+    environment: EnvironmentsEnum.${targetNetwork?.toLowerCase() || 'devnet'}, // devnet, testnet, or mainnet
     // Optional network overrides
     network: {
       walletAddress: 'https://${targetNetwork.toLowerCase()}-wallet.multiversx.com',

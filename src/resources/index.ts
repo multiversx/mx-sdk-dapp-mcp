@@ -12,7 +12,8 @@ import {
 import { logger } from '../utils/logger.js';
 import { RESOURCE_URIS, ERROR_CODES } from '../utils/constants.js';
 import { SDKDappInitResource } from './sdk-dapp-init.js';
-import { LoginLogoutResource } from './sdk-dapp-login-logout.js';
+import { SDKDappLoginLogoutResource } from './sdk-dapp-login-logout.js';
+import { SDKDappCustomProviderResource } from './sdk-dapp-custom-providers.js';
 
 /**
  * Setup all resources for the MCP server
@@ -38,6 +39,12 @@ export async function setupResources(server: Server): Promise<void> {
           description: 'Complete guide for implementing user authentication in SDK-DAPP v5',
           mimeType: 'application/json',
         },
+        {
+          uri: RESOURCE_URIS.SDK_DAPP_CUSTOM_PROVIDERS,
+          name: 'Custom Provider Development Guide',
+          description: 'Complete guide for creating and integrating custom signing providers in SDK-DAPP v5',
+          mimeType: 'application/json',
+        },
       ],
     };
   });
@@ -53,7 +60,10 @@ export async function setupResources(server: Server): Promise<void> {
           return await SDKDappInitResource.read();
 
         case RESOURCE_URIS.SDK_DAPP_LOGIN_LOGOUT:
-          return await LoginLogoutResource.read();
+          return await SDKDappLoginLogoutResource.read();
+
+        case RESOURCE_URIS.SDK_DAPP_CUSTOM_PROVIDERS:
+          return await SDKDappCustomProviderResource.read();
 
         default:
           throw new Error(`Unknown resource: ${uri}`);

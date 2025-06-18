@@ -157,89 +157,51 @@ export async function setupPrompts(server: Server): Promise<void> {
     const { name, arguments: args } = request.params;
     logger.debug(`Getting prompt: ${name}`, args);
 
+    // Lookup table for prompt handlers
+    const promptHandlers: Record<string, { description: string; generator: (args: any) => string }> = {
+      [PROMPT_NAMES.TRANSACTION_TEMPLATE]: {
+        description: 'Comprehensive template for creating MultiversX transactions with full workflow',
+        generator: generateTransactionTemplate,
+      },
+      [PROMPT_NAMES.BATCH_TRANSACTION_TEMPLATE]: {
+        description: 'Template for creating batch transactions (parallel or sequential)',
+        generator: generateBatchTransactionTemplate,
+      },
+      [PROMPT_NAMES.SMART_CONTRACT_TEMPLATE]: {
+        description: 'Template for smart contract interactions with detailed workflow',
+        generator: generateSmartContractTemplate,
+      },
+      [PROMPT_NAMES.TRANSACTION_MONITORING_TEMPLATE]: {
+        description: 'Template for monitoring transaction status and handling results',
+        generator: generateTransactionMonitoringTemplate,
+      },
+      [PROMPT_NAMES.WALLET_SETUP_GUIDE]: {
+        description: 'Guide for setting up MultiversX wallets and providers',
+        generator: generateWalletSetupGuide,
+      },
+      [PROMPT_NAMES.NETWORK_SWITCH_INSTRUCTIONS]: {
+        description: 'Instructions for switching between MultiversX networks',
+        generator: generateNetworkSwitchInstructions,
+      },
+    };
+
     try {
-      switch (name) {
-        case PROMPT_NAMES.TRANSACTION_TEMPLATE:
-          return {
-            description: 'Comprehensive template for creating MultiversX transactions with full workflow',
-            messages: [
-              {
-                role: 'user',
-                content: {
-                  type: 'text',
-                  text: generateTransactionTemplate(args),
-                },
-              },
-            ],
-          };
-        case PROMPT_NAMES.BATCH_TRANSACTION_TEMPLATE:
-          return {
-            description: 'Template for creating batch transactions (parallel or sequential)',
-            messages: [
-              {
-                role: 'user',
-                content: {
-                  type: 'text',
-                  text: generateBatchTransactionTemplate(args),
-                },
-              },
-            ],
-          };
-        case PROMPT_NAMES.SMART_CONTRACT_TEMPLATE:
-          return {
-            description: 'Template for smart contract interactions with detailed workflow',
-            messages: [
-              {
-                role: 'user',
-                content: {
-                  type: 'text',
-                  text: generateSmartContractTemplate(args),
-                },
-              },
-            ],
-          };
-        case PROMPT_NAMES.TRANSACTION_MONITORING_TEMPLATE:
-          return {
-            description: 'Template for monitoring transaction status and handling results',
-            messages: [
-              {
-                role: 'user',
-                content: {
-                  type: 'text',
-                  text: generateTransactionMonitoringTemplate(args),
-                },
-              },
-            ],
-          };
-        case PROMPT_NAMES.WALLET_SETUP_GUIDE:
-          return {
-            description: 'Guide for setting up MultiversX wallets and providers',
-            messages: [
-              {
-                role: 'user',
-                content: {
-                  type: 'text',
-                  text: generateWalletSetupGuide(args),
-                },
-              },
-            ],
-          };
-        case PROMPT_NAMES.NETWORK_SWITCH_INSTRUCTIONS:
-          return {
-            description: 'Instructions for switching between MultiversX networks',
-            messages: [
-              {
-                role: 'user',
-                content: {
-                  type: 'text',
-                  text: generateNetworkSwitchInstructions(args),
-                },
-              },
-            ],
-          };
-        default:
-          throw new Error(`Unknown prompt: ${name}`);
+      const handler = promptHandlers[name];
+      if (!handler) {
+        throw new Error(`Unknown prompt: ${name}`);
       }
+      return {
+        description: handler.description,
+        messages: [
+          {
+            role: 'user',
+            content: {
+              type: 'text',
+              text: handler.generator(args),
+            },
+          },
+        ],
+      };
     } catch (error) {
       logger.error(`Error getting prompt ${name}:`, error);
       throw {

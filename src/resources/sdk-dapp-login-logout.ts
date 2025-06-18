@@ -6,7 +6,7 @@
 import { RESOURCE_URIS } from '../utils/constants.js';
 import { logger } from '../utils/logger.js';
 
-export class LoginLogoutResource {
+export class SDKDappLoginLogoutResource {
   /**
    * Read login and logout guide
    */

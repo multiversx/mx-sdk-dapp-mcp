@@ -42,6 +42,7 @@ export const NETWORKS = {
 export const RESOURCE_URIS = {
   SDK_DAPP_INIT: 'mx://sdk-dapp-init',
   SDK_DAPP_LOGIN_LOGOUT: 'mx://sdk-dapp-login-logout',
+  SDK_DAPP_CUSTOM_PROVIDERS: 'mx://sdk-dapp-custom-providers',
 } as const;
 
 // Tool names
