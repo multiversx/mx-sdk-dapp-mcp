@@ -14,6 +14,8 @@ import { RESOURCE_URIS, ERROR_CODES } from '../utils/constants.js';
 import { SDKDappInitResource } from './sdk-dapp-init.js';
 import { SDKDappLoginLogoutResource } from './sdk-dapp-login-logout.js';
 import { SDKDappCustomProviderResource } from './sdk-dapp-custom-providers.js';
+import { SDKDappTransactionsResource } from './sdk-dapp-transactions.js';
+import { SDKDappReactResource } from './sdk-dapp-react.js';
 
 /**
  * Setup all resources for the MCP server
@@ -45,6 +47,18 @@ export async function setupResources(server: Server): Promise<void> {
           description: 'Complete guide for creating and integrating custom signing providers in SDK-DAPP v5',
           mimeType: 'application/json',
         },
+        {
+          uri: RESOURCE_URIS.SDK_DAPP_TRANSACTIONS,
+          name: 'Transaction Management Guide',
+          description: 'Complete guide for signing and sending different types of transactions in SDK-DAPP v5',
+          mimeType: 'application/json',
+        },
+        {
+          uri: RESOURCE_URIS.SDK_DAPP_REACT,
+          name: 'React Hooks Guide',
+          description: 'Comprehensive guide for using reactive hooks from SDK-DAPP v5 in React',
+          mimeType: 'application/json',
+        },
       ],
     };
   });
@@ -64,6 +78,12 @@ export async function setupResources(server: Server): Promise<void> {
 
         case RESOURCE_URIS.SDK_DAPP_CUSTOM_PROVIDERS:
           return await SDKDappCustomProviderResource.read();
+
+        case RESOURCE_URIS.SDK_DAPP_TRANSACTIONS:
+          return await SDKDappTransactionsResource.read();
+
+        case RESOURCE_URIS.SDK_DAPP_REACT:
+          return await SDKDappReactResource.read();
 
         default:
           throw new Error(`Unknown resource: ${uri}`);

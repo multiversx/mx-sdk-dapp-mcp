@@ -43,6 +43,8 @@ export const RESOURCE_URIS = {
   SDK_DAPP_INIT: 'mx://sdk-dapp-init',
   SDK_DAPP_LOGIN_LOGOUT: 'mx://sdk-dapp-login-logout',
   SDK_DAPP_CUSTOM_PROVIDERS: 'mx://sdk-dapp-custom-providers',
+  SDK_DAPP_TRANSACTIONS: 'mx://sdk-dapp-transactions',
+  SDK_DAPP_REACT: 'urn:sdk-dapp-react',
 } as const;
 
 // Tool names
