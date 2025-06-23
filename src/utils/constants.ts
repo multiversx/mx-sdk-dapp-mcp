@@ -45,12 +45,8 @@ export const RESOURCE_URIS = {
 // Tool names
 export const TOOL_NAMES = {
   QUERY_ACCOUNT: 'mx-query-account',
+  SDK_DAPP_GUIDE: 'mx-sdk-dapp-guide',
 } as const;
 
 // Prompt names
-export const PROMPT_NAMES = {
-  // Transaction prompts (only the ones that exist in sdk-dapp-transaction.ts)
-  TRANSACTION_TEMPLATE: 'mx-transaction-template',
-  BATCH_TRANSACTION_TEMPLATE: 'mx-batch-transaction-template',
-  SMART_CONTRACT_TEMPLATE: 'mx-smart-contract-template',
-} as const;
+export const PROMPT_NAMES = {} as const;

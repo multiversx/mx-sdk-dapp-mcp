@@ -4,15 +4,12 @@
  */
 
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
-import { 
-  ListToolsRequestSchema,
-  CallToolRequestSchema 
-} from '@modelcontextprotocol/sdk/types.js';
-import { z } from 'zod';
+import { ListToolsRequestSchema, CallToolRequestSchema } from '@modelcontextprotocol/sdk/types.js';
 
 import { logger } from '../utils/logger.js';
 import { TOOL_NAMES, ERROR_CODES, NETWORKS } from '../utils/constants.js';
 import { handleQueryAccount } from './query-account.js';
+import { handleSdkDappGuide } from './sdk-dapp-guide.js';
 
 /**
  * Setup all tools for the MCP server
@@ -23,12 +20,13 @@ export async function setupTools(server: Server): Promise<void> {
   // List all available tools
   server.setRequestHandler(ListToolsRequestSchema, async () => {
     logger.debug('Listing available tools');
-    
+
     return {
       tools: [
         {
           name: TOOL_NAMES.QUERY_ACCOUNT,
-          description: 'Query MultiversX account information including balance, nonce, transactions, and guardian status for any network (mainnet, testnet, devnet)',
+          description:
+            'Query MultiversX account information including balance, nonce, transactions, and guardian status for any network (mainnet, testnet, devnet)',
           inputSchema: {
             type: 'object',
             properties: {
@@ -75,6 +73,22 @@ export async function setupTools(server: Server): Promise<void> {
             required: ['address'],
           },
         },
+        {
+          name: TOOL_NAMES.SDK_DAPP_GUIDE,
+          description:
+            'Fetch the MultiversX SDK-DAPP v5 guide, including setup and usage for React, TypeScript, JavaScript, Angular, login/logout, signing, sending, tracking transactions, signing messages, and creating custom providers. Optionally, provide a section name to extract a specific section.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              section: {
+                type: 'string',
+                description:
+                  'Optional. The section name to extract from the guide (e.g., Installation, Configuration, Transactions, etc.)',
+              },
+            },
+            required: [],
+          },
+        },
       ],
     };
   });
@@ -88,7 +102,9 @@ export async function setupTools(server: Server): Promise<void> {
       switch (name) {
         case TOOL_NAMES.QUERY_ACCOUNT:
           return await handleQueryAccount(args);
-        
+        case TOOL_NAMES.SDK_DAPP_GUIDE:
+          // Fetch and return the latest SDK-DAPP guide from remote, with optional section extraction
+          return await handleSdkDappGuide(args);
         default:
           throw new Error(`Unknown tool: ${name}`);
       }
@@ -96,10 +112,12 @@ export async function setupTools(server: Server): Promise<void> {
       logger.error(`Error executing tool ${name}:`, error);
       throw {
         code: ERROR_CODES.TOOL_EXECUTION_ERROR,
-        message: `Failed to execute tool: ${name}. ${error instanceof Error ? error.message : 'Unknown error'}`,
+        message: `Failed to execute tool: ${name}. ${
+          error instanceof Error ? error.message : 'Unknown error'
+        }`,
       };
     }
   });
 
   logger.info('Tools setup completed');
-} 
+}
