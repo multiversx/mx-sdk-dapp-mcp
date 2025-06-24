@@ -10,7 +10,7 @@ import {
 } from '@modelcontextprotocol/sdk/types.js';
 
 import { logger } from '../utils/logger.js';
-import { PROMPT_NAMES, ERROR_CODES } from '../utils/constants.js';
+import { ERROR_CODES } from '../utils/constants.js';
 
 /**
  * Setup all prompts for the MCP server

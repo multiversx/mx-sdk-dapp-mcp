@@ -1,33 +1,17 @@
 # MultiversX MCP Server
 
-A comprehensive Model Context Protocol (MCP) server implementation for the MultiversX blockchain ecosystem. This server provides AI agents and applications with access to MultiversX SDK-dApp v5 documentation, development resources, transaction templates, and blockchain data querying capabilities.
+A comprehensive Model Context Protocol (MCP) server implementation for the MultiversX blockchain ecosystem. This server provides AI agents and applications with access to MultiversX SDK-dApp v5 documentation, development resources, and blockchain data querying capabilities.
 
 ## 🚀 Features
 
 ### 📚 Resources (Knowledge Base)
 
-Comprehensive MultiversX SDK-dApp v5 documentation and guides:
-
-- **SDK-dApp v5 Complete Guide** (`mx://sdk-dapp-guide`) - Architecture, installation, configuration, and best practices
-- **Login & Logout Guide** (`mx://sdk-dapp-login-logout`) - Complete authentication implementation
-- **React Hooks Guide** (`mx://sdk-dapp-react`) - Reactive hooks for React applications
-- **Transaction Management** (`mx://sdk-dapp-transactions`) - Transaction creation, signing, and tracking
-- **Custom Providers** (`mx://sdk-dapp-custom-providers`) - Creating custom wallet providers
-- **Initialization Guide** (`mx://sdk-dapp-init`) - App setup and configuration
+- **SDK-dApp v5 Complete Guide** (`mx://sdk-dapp-guide`) - Comprehensive MultiversX SDK-dApp v5 documentation including architecture, installation, configuration, and best practices
 
 ### 🔧 Tools (Executable Functions)
 
-Blockchain interaction capabilities:
-
-- **Query Account** (`mx:query-account`) - Retrieve account information from any MultiversX network
-
-### 📝 Prompts (Templates)
-
-Ready-to-use templates for common development tasks:
-
-- **Transaction Template** (`mx-transaction-template`) - Complete transaction workflow
-- **Batch Transaction Template** (`mx-batch-transaction-template`) - Parallel/sequential batching
-- **Smart Contract Template** (`mx-smart-contract-template`) - Contract interaction workflows
+- **Query Account** (`mx-query-account`) - Retrieve account information from any MultiversX network
+- **SDK-DAPP Guide** (`mx-sdk-dapp-guide`) - Fetch the latest SDK-DAPP v5 guide from GitHub with optional section extraction
 
 ## 📦 Installation
 
@@ -93,22 +77,17 @@ The server supports all MultiversX networks:
 src/
 ├── index.ts              # Main entry point
 ├── resources/            # MCP resources (documentation)
-│   ├── index.ts         # Resource handler setup
-│   ├── sdk-dapp-guide.ts    # Complete SDK-dApp guide
-│   ├── sdk-dapp-init.ts     # Initialization guide
-│   ├── sdk-dapp-login-logout.ts # Authentication guide
-│   ├── sdk-dapp-react.ts    # React hooks guide
-│   ├── sdk-dapp-transactions.ts # Transaction guide
-│   └── sdk-dapp-custom-providers.ts # Custom providers guide
+│   ├── index.ts              # Resource handler setup
+│   └── sdk-dapp-guide.ts     # Complete SDK-dApp guide
 ├── tools/               # MCP tools (executable functions)
-│   ├── index.ts         # Tool handler setup
-│   └── query-account.ts # Account querying tool
-├── prompts/             # MCP prompts (templates)
-│   ├── index.ts         # Prompt handler setup
-│   └── sdk-dapp-transaction.ts # Transaction templates
-└── utils/               # Utilities
-    ├── logger.ts        # Logging utility
-    └── constants.ts     # Constants and configurations
+│   ├── index.ts             # Tool handler setup
+│   ├── query-account.ts     # Account querying tool
+│   └── sdk-dapp-guide.ts    # SDK-dApp guide tool
+├── prompts/             # MCP prompts (templates) - Currently empty
+│   └── index.ts             # Prompt handler setup
+├── utils/               # Utilities
+│   ├── constants.ts         # Constants and configurations
+│   └── logger.ts            # Logging utility
 ```
 
 ## 🔌 Client Integration
@@ -178,101 +157,35 @@ Add to `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS)
 
 ## 📚 Resources Documentation
 
-### 1. SDK-dApp v5 Complete Guide (`mx://sdk-dapp-guide`)
+### SDK-dApp v5 Complete Guide (`mx://sdk-dapp-guide`)
 
-Comprehensive guide covering:
-
-- Overview and architecture
-- Installation and setup
-- Configuration options
-- Provider interactions
-- Data access patterns
-- Transaction management
-- Internal structure
-- Network configuration
-- Account management
-- UI components
-- Debugging strategies
-
-### 2. Login & Logout Guide (`mx://sdk-dapp-login-logout`)
-
-Complete authentication implementation:
-
-- UnlockPanelManager usage
-- Programmatic login approaches
-- Supported wallet providers
-- Login status monitoring
-- Logout implementation
-- Route protection
-- Error handling
-- Best practices
-
-### 3. React Hooks Guide (`mx://sdk-dapp-react`)
-
-Reactive hooks for React applications:
-
-- `useGetAccount()` - Account data access
-- `useGetLoginInfo()` - Login status and method
-- `useGetNetworkConfig()` - Network configuration
-- `useGetTransactionSessions()` - Transaction tracking
-- `useSelector()` - Custom store queries
-- Practical usage examples
-- Best practices and troubleshooting
-
-### 4. Transaction Management (`mx://sdk-dapp-transactions`)
-
-Complete transaction handling:
-
-- Transaction creation workflow
-- Signing processes
-- Batch transactions (parallel/sequential)
-- Smart contract interactions
-- ABI-based transactions
-- Transaction tracking
-- Status monitoring
-- Error handling
-
-### 5. Custom Providers (`mx://sdk-dapp-custom-providers`)
-
-Creating custom wallet providers:
-
-- IProvider interface implementation
-- Provider registration methods
-- UI component integration
-- Advanced examples (PEM, Keystore, Hardware)
-- Security best practices
-- Testing strategies
-- Troubleshooting guide
-
-### 6. Initialization Guide (`mx://sdk-dapp-init`)
-
-App setup and configuration:
-
-- Basic initialization
-- Environment configuration
-- Storage options
-- Network settings
-- Custom provider setup
-- Framework-specific examples (React, Next.js, Solid.js)
-- Production considerations
-- Common issues and solutions
+Comprehensive guide covering MultiversX SDK-dApp v5 architecture, installation, configuration, provider interactions, data access patterns, transaction management, network configuration, account management, UI components, and debugging strategies.
 
 ## 🔧 Tools Documentation
 
-### Query Account Tool (`mx:query-account`)
+### Query Account Tool (`mx-query-account`)
 
-Query MultiversX account information including balance, nonce, transactions, and guardian status.
+Query MultiversX account information including balance, nonce, transactions, guardian status, assets, and more for any network (mainnet, testnet, devnet).
 
 **Parameters:**
 
 - `address` (required): MultiversX account address (erd1... format)
 - `network`: MAINNET, TESTNET, or DEVNET (default: MAINNET)
-- `withTxCount`: Include transaction count (default: false)
-- `withGuardianInfo`: Include guardian information (default: false)
-- `withScrCount`: Include smart contract results count (default: false)
-- `withTimestamp`: Include timestamp of last activity (default: false)
-- `withAssets`: Include assets (tokens/NFTs) (default: false)
-- `timestamp`: Retrieve account state from specific timestamp
+- `withGuardianInfo`: Include guardian information in the response (default: false)
+- `withTxCount`: Include transaction count in the response (default: false)
+- `withScrCount`: Include smart contract results count in the response (default: false)
+- `withTimestamp`: Include timestamp of last activity in the response (default: false)
+- `withAssets`: Include assets (tokens/NFTs) in the response (default: false)
+- `timestamp`: Retrieve account state from a specific timestamp
+
+**Response Format:**
+
+- Address and balance information
+- Transaction counts and activity
+- Guardian status (if requested)
+- Smart contract details (if applicable)
+- Asset information (if requested)
+- Verification status and metadata
 
 **Usage Examples:**
 
@@ -285,150 +198,167 @@ Get balance for address erd1qga7ze0l03chfgru0a32wxqf2226nzrxnyhzer9lmudqhjgy7ycq
 ```
 
 ```
-Show detailed account info with transaction count for erd1qga7ze0l03chfgru0a32wxqf2226nzrxnyhzer9lmudqhjgy7ycqjjyknz
+Show detailed account info with transaction count and guardian status for erd1qga7ze0l03chfgru0a32wxqf2226nzrxnyhzer9lmudqhjgy7ycqjjyknz
 ```
+
+---
+
+### SDK-DAPP Guide Tool (`mx-sdk-dapp-guide`)
+
+Fetch the MultiversX SDK-DAPP v5 guide from the official GitHub repository, including setup and usage for React, TypeScript, JavaScript, Angular, login/logout, signing, sending, tracking transactions, signing messages, and creating custom providers. Optionally, provide a section name to extract a specific section.
+
+**Parameters:**
+
+- `section` (optional): The section name to extract from the guide (e.g., Installation, Configuration, Transactions, etc.)
 
 **Response Format:**
 
-- Address and balance information
-- Transaction counts and activity
-- Guardian status (if requested)
-- Smart contract details (if applicable)
-- Asset information (if requested)
-- Verification status and metadata
-
-## 📝 Prompts Documentation
-
-### 1. Transaction Template (`mx-transaction-template`)
-
-Comprehensive template for creating MultiversX transactions with complete workflow.
-
-**Arguments:**
-
-- `recipient` (optional): The recipient address
-- `amount` (optional): The amount to send (in EGLD)
-- `data` (optional): Optional transaction data
-- `contractAddress` (optional): Smart contract address
-- `functionName` (optional): Smart contract function name
-- `functionArgs` (optional): Smart contract function arguments array
-
-**Generated Workflow:**
-
-1. Transaction object creation with validation
-2. Amount conversion (EGLD to wei)
-3. Provider-based transaction signing
-4. Transaction broadcasting
-5. Status tracking and monitoring
-6. Error handling and security notes
+- Markdown content of the full guide or the requested section
 
 **Usage Examples:**
 
-```
-Create a transaction template for sending 1 EGLD to erd1qga7ze0l03chfgru0a32wxqf2226nzrxnyhzer9lmudqhjgy7ycqjjyknz
-```
+#### Basic Usage - Fetch Complete Guide
 
 ```
-Generate smart contract interaction template for contract erd1qqqqqqqqqqqqqpgqak8zt22wl2ph4tswtyc39namqx6ysa2sd8ss4xmlj with function ping
+Fetch the complete MultiversX SDK-DAPP v5 guide
 ```
 
-### 2. Batch Transaction Template (`mx-batch-transaction-template`)
-
-Template for creating batch transactions with parallel or sequential execution.
-
-**Arguments:**
-
-- `batchType` (optional): "parallel" or "sequential" (default: parallel)
-- `transactions` (optional): Array of transaction objects
-
-**Generated Workflow:**
-
-1. Multiple transaction creation
-2. Batch configuration (parallel vs sequential)
-3. Batch signing process
-4. Execution strategy implementation
-5. Comprehensive tracking
-6. Error handling for batch operations
-
-**Usage Examples:**
+#### Setup SDK-dApp
 
 ```
-Create a parallel batch transaction template for multiple transfers
+Get the SDK-dApp installation and setup instructions
 ```
 
-```
-Generate sequential batch transaction template for dependent operations
-```
+_Use section: "Installation"_
 
-### 3. Smart Contract Template (`mx-smart-contract-template`)
-
-Template for smart contract interactions with detailed workflow.
-
-**Arguments:**
-
-- `contractAddress` (optional): The smart contract address
-- `functionName` (optional): The function to call
-- `functionArgs` (optional): Array of function arguments
-- `value` (optional): EGLD value to send with transaction
-
-**Generated Workflow:**
-
-1. Contract interaction preparation
-2. Transaction configuration with proper gas limits
-3. Function call setup
-4. Transaction execution
-5. Result parsing (for view functions)
-6. Gas estimation guidelines
-7. Error handling strategies
-
-**Usage Examples:**
+#### Login and Logout with SDK-dApp
 
 ```
-Create smart contract interaction template for ping-pong contract
+Show me how to implement login and logout functionality with SDK-dApp
 ```
 
-```
-Generate contract template for token transfer function
-```
+_Use section: "Login" or "Logout" or "Authentication"_
 
-## 🔍 Usage Examples
-
-### Querying Account Information
+#### Sign/Send/Track Transactions
 
 ```
-"Query the MultiversX account erd1qga7ze0l03chfgru0a32wxqf2226nzrxnyhzer9lmudqhjgy7ycqjjyknz on mainnet"
+Get information about signing, sending, and tracking transactions with SDK-dApp
 ```
 
-```
-"Get detailed account info with transaction count and guardian status for erd1qga7ze0l03chfgru0a32wxqf2226nzrxnyhzer9lmudqhjgy7ycqjjyknz"
-```
+_Use section: "Transactions" or "Signing Transactions"_
 
-### Accessing Documentation
+#### Get Account Information
 
 ```
-"Show me the SDK-dApp login implementation guide"
+Show me how to get account information using SDK-dApp
 ```
 
-```
-"How do I use React hooks with MultiversX SDK-dApp?"
-```
+_Use section: "Account" or "Getting account data"_
+
+#### Sign Messages
 
 ```
-"What are the best practices for custom provider development?"
+Get information about signing messages with SDK-dApp
 ```
 
-### Generating Transaction Templates
+_Use section: "Signing Messages" or "Message Signing"_
+
+#### Configuration and Setup
 
 ```
-"Create a transaction template for sending 5 EGLD to erd1..."
+Get the SDK-dApp configuration and initialization guide
 ```
 
-```
-"Generate a smart contract interaction template for a token swap"
-```
+_Use section: "Configuration" or "Setup"_
+
+#### Provider Management
 
 ```
-"Show me how to create batch transactions for multiple operations"
+Show me how to work with different wallet providers in SDK-dApp
 ```
+
+_Use section: "Providers" or "Wallet Providers"_
+
+#### UI Components
+
+```
+Get information about SDK-dApp UI components
+```
+
+_Use section: "UI Components" or "Components"_
+
+#### Advanced Usage Examples
+
+1. **Fetch specific sections:**
+
+   ```
+   Get only the "Installation" section from the SDK-DAPP guide
+   ```
+
+2. **Transaction workflow:**
+
+   ```
+   Show me the complete transaction workflow from signing to tracking
+   ```
+
+3. **Provider integration:**
+
+   ```
+   How do I integrate different wallet providers with SDK-dApp?
+   ```
+
+4. **Account management:**
+
+   ```
+   Get the account management section from the SDK-DAPP guide
+   ```
+
+5. **Network configuration:**
+   ```
+   Show me how to configure networks in SDK-dApp
+   ```
+
+---
+
+## 🛠️ Tool Usage Examples
+
+### Query Account Tool
+
+- Query a mainnet account:
+  ```
+  Query the MultiversX account erd1qga7ze0l03chfgru0a32wxqf2226nzrxnyhzer9lmudqhjgy7ycqjjyknz
+  ```
+- Query an account on testnet:
+  ```
+  Get balance for address erd1qga7ze0l03chfgru0a32wxqf2226nzrxnyhzer9lmudqhjgy7ycqjjyknz on testnet
+  ```
+- Show detailed info with transaction count and guardian status:
+  ```
+  Show detailed account info with transaction count and guardian status for erd1qga7ze0l03chfgru0a32wxqf2226nzrxnyhzer9lmudqhjgy7ycqjjyknz
+  ```
+
+### SDK-DAPP Guide Tool
+
+- Fetch the entire guide:
+  ```
+  Fetch the complete MultiversX SDK-DAPP v5 guide
+  ```
+- Fetch a specific section:
+  ```
+  Get only the "Installation" section from the SDK-DAPP guide
+  ```
+- Get setup instructions:
+  ```
+  Show me how to set up SDK-dApp in my project
+  ```
+- Get authentication guide:
+  ```
+  How do I implement login and logout with SDK-dApp?
+  ```
+- Get transaction guide:
+  ```
+  Show me how to sign and send transactions with SDK-dApp
+  ```
 
 ## 🔧 Troubleshooting
 
@@ -463,14 +393,15 @@ Generate contract template for token transfer function
 - Clean install: `rm -rf node_modules && pnpm install`
 - Check TypeScript errors: `pnpm tsc --noEmit`
 
-#### 4. Template Generation Issues
+#### 4. SDK-DAPP Guide Fetch Issues
 
-**Problem**: Prompts not generating correctly
+**Problem**: Guide not loading or sections not found
 **Solutions**:
 
-- Verify prompt arguments are properly formatted
-- Check for required parameters
-- Review generated templates for completeness
+- Check internet connectivity
+- Verify section names are correct (case-insensitive matching)
+- Try fetching the complete guide first
+- Check GitHub repository accessibility
 
 ### Debug Mode
 
@@ -506,7 +437,7 @@ If you encounter issues:
 ### Performance
 
 - Cache frequently accessed documentation
-- Use batch operations when possible
+- Use section-specific queries when possible
 - Monitor API rate limits
 - Optimize query parameters
 
