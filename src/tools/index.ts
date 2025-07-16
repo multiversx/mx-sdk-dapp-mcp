@@ -75,18 +75,31 @@ export async function setupTools(server: Server): Promise<void> {
         },
         {
           name: TOOL_NAMES.SDK_DAPP_GUIDE,
-          description:
-            'Fetch the MultiversX SDK-DAPP v5 documentation from DeepWiki (https://deepwiki.com/multiversx/mx-sdk-dapp). Provide an optional topic/section name (e.g. "React Hooks", "Transaction Management") and the tool will automatically retrieve the corresponding markdown page.',
+          description: `Retrieves comprehensive documentation for the MultiversX SDK-DAPP v5 library from DeepWiki. This tool provides access to the complete developer guide including installation, configuration, core concepts, API reference, and advanced topics. The documentation is specifically tailored for React developers building decentralized applications on the MultiversX blockchain.\n\nKey capabilities:\n- Fetch complete sections of the SDK-DAPP v5 documentation\n- Access installation and setup guides\n- Retrieve API reference documentation for hooks, functions, and types\n- Get configuration and integration examples\n- Access advanced topics like native authentication and WebView integration\n- Supports intelligent section matching with fuzzy search\n\nThe tool automatically maps user-friendly section names to the corresponding documentation pages and provides fallback mechanisms for robust operation.`,
           inputSchema: {
             type: 'object',
             properties: {
               section: {
                 type: 'string',
-                description:
-                  'Optional. The section name to extract from the guide (e.g., Installation, Configuration, Transactions, etc.)',
+                description: `Optional. Specify which section of the SDK-DAPP documentation to retrieve. \n\nAvailable sections include:\n• Getting Started: \"overview\", \"getting-started\"\n• Installation: \"installation\", \"setup\", \"configuration\"\n• Core Concepts: \"authentication\", \"transactions\", \"state-management\"\n• API Reference: \"react-hooks\", \"core-functions\", \"provider-types\", \"transaction-types\", \"network-configuration\", \"constants-and-utilities\"\n• Advanced Topics: \"native-authentication\", \"webview-integration\", \"custom-providers\"\n\nYou can use either human-friendly names (e.g., \"React Hooks\") or exact section identifiers (e.g., \"4.2-react-hooks\"). The tool includes fuzzy matching to find the most relevant section even with partial matches.\n\nExamples:\n- \"installation\" → Installation and setup guide\n- \"hooks\" → React hooks documentation\n- \"authentication\" → Authentication and provider setup\n- \"transactions\" → Transaction management guide\n- \"configuration\" → Basic configuration guide\n\nIf no section is specified, the tool returns the overview documentation.`,
+                examples: [
+                  'installation',
+                  'react-hooks',
+                  'authentication',
+                  'transactions',
+                  'configuration',
+                  'native-authentication',
+                  'webview-integration',
+                ],
               },
             },
             required: [],
+          },
+          annotations: {
+            title: 'MultiversX SDK-DAPP Documentation Retriever',
+            readOnlyHint: true,
+            idempotentHint: true,
+            openWorldHint: true,
           },
         },
       ],
