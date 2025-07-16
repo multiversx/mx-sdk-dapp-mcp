@@ -11,7 +11,7 @@ A comprehensive Model Context Protocol (MCP) server implementation for the Multi
 ### 🔧 Tools (Executable Functions)
 
 - **Query Account** (`mx-query-account`) - Retrieve account information from any MultiversX network
-- **SDK-DAPP Guide** (`mx-sdk-dapp-guide`) - Fetch the latest SDK-DAPP v5 guide from GitHub with optional section extraction
+- **SDK-DAPP Guide** (`mx-sdk-dapp-guide`) - Retrieves comprehensive documentation for the MultiversX SDK-DAPP v5 library from DeepWiki, with intelligent section matching and advanced topic support
 
 ## 📦 Installation
 
@@ -205,11 +205,44 @@ Show detailed account info with transaction count and guardian status for erd1qg
 
 ### SDK-DAPP Guide Tool (`mx-sdk-dapp-guide`)
 
-Fetch the MultiversX SDK-DAPP v5 guide from the official GitHub repository, including setup and usage for React, TypeScript, JavaScript, Angular, login/logout, signing, sending, tracking transactions, signing messages, and creating custom providers. Optionally, provide a section name to extract a specific section.
+Retrieves comprehensive documentation for the MultiversX SDK-DAPP v5 library from DeepWiki. This tool provides access to the complete developer guide including installation, configuration, core concepts, API reference, and advanced topics. The documentation is specifically tailored for React developers building decentralized applications on the MultiversX blockchain.
+
+**Key capabilities:**
+
+- Fetch complete sections of the SDK-DAPP v5 documentation
+- Access installation and setup guides
+- Retrieve API reference documentation for hooks, functions, and types
+- Get configuration and integration examples
+- Access advanced topics like native authentication and WebView integration
+- Supports intelligent section matching with fuzzy search
+
+The tool automatically maps user-friendly section names to the corresponding documentation pages and provides fallback mechanisms for robust operation.
 
 **Parameters:**
 
-- `section` (optional): The section name to extract from the guide (e.g., Installation, Configuration, Transactions, etc.)
+- `section` (optional): Specify which section of the SDK-DAPP documentation to retrieve.
+
+  Available sections include:
+
+  - Getting Started: `"overview"`, `"getting-started"`
+  - Installation: `"installation"`, `"setup"`, `"configuration"`
+  - Core Concepts: `"authentication"`, `"transactions"`, `"state-management"`
+  - API Reference: `"react-hooks"`, `"core-functions"`, `"provider-types"`, `"transaction-types"`, `"network-configuration"`, `"constants-and-utilities"`
+  - Advanced Topics: `"native-authentication"`, `"webview-integration"`, `"custom-providers"`
+
+  You can use either human-friendly names (e.g., `"React Hooks"`) or exact section identifiers (e.g., `"4.2-react-hooks"`). The tool includes fuzzy matching to find the most relevant section even with partial matches.
+
+  **Examples:**
+
+  - `"installation"` → Installation and setup guide
+  - `"hooks"` → React hooks documentation
+  - `"authentication"` → Authentication and provider setup
+  - `"transactions"` → Transaction management guide
+  - `"configuration"` → Basic configuration guide
+  - `"native-authentication"` → Native authentication guide
+  - `"webview-integration"` → WebView integration guide
+
+  If no section is specified, the tool returns the overview documentation.
 
 **Response Format:**
 
@@ -223,45 +256,27 @@ Fetch the MultiversX SDK-DAPP v5 guide from the official GitHub repository, incl
 Fetch the complete MultiversX SDK-DAPP v5 guide
 ```
 
-#### Setup SDK-dApp
+#### Fetch a Specific Section
 
 ```
-Get the SDK-dApp installation and setup instructions
+Get only the "Installation" section from the SDK-DAPP guide
 ```
 
-_Use section: "Installation"_
-
-#### Login and Logout with SDK-dApp
+#### Fuzzy Section Matching
 
 ```
-Show me how to implement login and logout functionality with SDK-dApp
+Show me the React Hooks documentation from the SDK-DAPP guide
 ```
 
-_Use section: "Login" or "Logout" or "Authentication"_
-
-#### Sign/Send/Track Transactions
+#### Advanced Topics
 
 ```
-Get information about signing, sending, and tracking transactions with SDK-dApp
+How do I use native authentication with SDK-dApp?
 ```
 
-_Use section: "Transactions" or "Signing Transactions"_
-
-#### Get Account Information
-
 ```
-Show me how to get account information using SDK-dApp
+Show me the WebView integration section from the SDK-DAPP guide
 ```
-
-_Use section: "Account" or "Getting account data"_
-
-#### Sign Messages
-
-```
-Get information about signing messages with SDK-dApp
-```
-
-_Use section: "Signing Messages" or "Message Signing"_
 
 #### Configuration and Setup
 
@@ -269,54 +284,11 @@ _Use section: "Signing Messages" or "Message Signing"_
 Get the SDK-dApp configuration and initialization guide
 ```
 
-_Use section: "Configuration" or "Setup"_
-
-#### Provider Management
+#### API Reference
 
 ```
-Show me how to work with different wallet providers in SDK-dApp
+Show me the available core functions in SDK-dApp
 ```
-
-_Use section: "Providers" or "Wallet Providers"_
-
-#### UI Components
-
-```
-Get information about SDK-dApp UI components
-```
-
-_Use section: "UI Components" or "Components"_
-
-#### Advanced Usage Examples
-
-1. **Fetch specific sections:**
-
-   ```
-   Get only the "Installation" section from the SDK-DAPP guide
-   ```
-
-2. **Transaction workflow:**
-
-   ```
-   Show me the complete transaction workflow from signing to tracking
-   ```
-
-3. **Provider integration:**
-
-   ```
-   How do I integrate different wallet providers with SDK-dApp?
-   ```
-
-4. **Account management:**
-
-   ```
-   Get the account management section from the SDK-DAPP guide
-   ```
-
-5. **Network configuration:**
-   ```
-   Show me how to configure networks in SDK-dApp
-   ```
 
 ---
 
