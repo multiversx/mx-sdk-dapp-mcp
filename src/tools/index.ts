@@ -76,7 +76,7 @@ export async function setupTools(server: Server): Promise<void> {
         {
           name: TOOL_NAMES.SDK_DAPP_GUIDE,
           description:
-            'Fetch the MultiversX SDK-DAPP v5 guide, including setup and usage for React, TypeScript, JavaScript, Angular, login/logout, signing, sending, tracking transactions, signing messages, and creating custom providers. Optionally, provide a section name to extract a specific section.',
+            'Fetch the MultiversX SDK-DAPP v5 documentation from DeepWiki (https://deepwiki.com/multiversx/mx-sdk-dapp). Provide an optional topic/section name (e.g. "React Hooks", "Transaction Management") and the tool will automatically retrieve the corresponding markdown page.',
           inputSchema: {
             type: 'object',
             properties: {
